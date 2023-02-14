@@ -3,7 +3,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,8 @@ type ESO struct {
 	*HelmChart
 }
 
+const installCRDsVar = "installCRDs"
+
 func NewESO(mutators ...MutationFunc) *ESO {
 	eso := &ESO{
 		&HelmChart{
@@ -32,16 +34,8 @@ func NewESO(mutators ...MutationFunc) *ESO {
 			Chart:       "/k8s/deploy/charts/external-secrets",
 			Vars: []StringTuple{
 				{
-					Key:   "image.repository",
-					Value: os.Getenv("IMAGE_REGISTRY"),
-				},
-				{
-					Key:   "webhook.image.repository",
-					Value: os.Getenv("IMAGE_REGISTRY"),
-				},
-				{
-					Key:   "certController.image.repository",
-					Value: os.Getenv("IMAGE_REGISTRY"),
+					Key:   "webhook.port",
+					Value: "9443",
 				},
 				{
 					Key:   "webhook.image.tag",
@@ -56,8 +50,24 @@ func NewESO(mutators ...MutationFunc) *ESO {
 					Value: os.Getenv("VERSION"),
 				},
 				{
-					Key:   "installCRDs",
+					Key:   "extraArgs.loglevel",
+					Value: "debug",
+				},
+				{
+					Key:   installCRDsVar,
 					Value: "false",
+				},
+				{
+					Key:   "concurrent",
+					Value: "100",
+				},
+				{
+					Key:   "extraArgs.experimental-enable-vault-token-cache",
+					Value: "true",
+				},
+				{
+					Key:   "extraArgs.experimental-enable-aws-session-cache",
+					Value: "true",
 				},
 			},
 		},
@@ -135,6 +145,19 @@ func WithControllerClass(class string) MutationFunc {
 	}
 }
 
+// By default ESO is installed without CRDs
+// when using WithCRDs() the CRDs will be installed before
+// and uninstalled after use.
+func WithCRDs() MutationFunc {
+	return func(eso *ESO) {
+		for i, v := range eso.HelmChart.Vars {
+			if v.Key == installCRDsVar {
+				eso.HelmChart.Vars[i].Value = "true"
+			}
+		}
+	}
+}
+
 func (l *ESO) Install() error {
 	By("Installing eso\n")
 	err := l.HelmChart.Install()
@@ -142,5 +165,17 @@ func (l *ESO) Install() error {
 		return err
 	}
 
+	return nil
+}
+
+func (l *ESO) Uninstall() error {
+	By("Uninstalling eso")
+	err := l.HelmChart.Uninstall()
+	if err != nil {
+		return err
+	}
+	if l.HelmChart.HasVar(installCRDsVar, "true") {
+		return uninstallCRDs(l.config)
+	}
 	return nil
 }

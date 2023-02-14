@@ -2,7 +2,9 @@
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,6 +21,7 @@ import (
 
 	"github.com/oracle/oci-go-sdk/v56/common"
 	"github.com/oracle/oci-go-sdk/v56/common/auth"
+	"github.com/oracle/oci-go-sdk/v56/keymanagement"
 	"github.com/oracle/oci-go-sdk/v56/secrets"
 	"github.com/tidwall/gjson"
 	corev1 "k8s.io/api/core/v1"
@@ -52,13 +55,31 @@ const (
 	errUnexpectedContent                     = "unexpected secret bundle content"
 )
 
+// https://github.com/external-secrets/external-secrets/issues/644
+var _ esv1beta1.SecretsClient = &VaultManagementService{}
+var _ esv1beta1.Provider = &VaultManagementService{}
+
 type VaultManagementService struct {
-	Client VMInterface
-	vault  string
+	Client         VMInterface
+	KmsVaultClient KmsVCInterface
+	vault          string
 }
 
 type VMInterface interface {
 	GetSecretBundleByName(ctx context.Context, request secrets.GetSecretBundleByNameRequest) (secrets.GetSecretBundleByNameResponse, error)
+}
+
+type KmsVCInterface interface {
+	GetVault(ctx context.Context, request keymanagement.GetVaultRequest) (response keymanagement.GetVaultResponse, err error)
+}
+
+// Not Implemented PushSecret.
+func (vms *VaultManagementService) PushSecret(ctx context.Context, value []byte, remoteRef esv1beta1.PushRemoteRef) error {
+	return fmt.Errorf("not implemented")
+}
+
+func (vms *VaultManagementService) DeleteSecret(ctx context.Context, remoteRef esv1beta1.PushRemoteRef) error {
+	return fmt.Errorf("not implemented")
 }
 
 // Empty GetAllSecrets.
@@ -121,6 +142,11 @@ func (vms *VaultManagementService) GetSecretMap(ctx context.Context, ref esv1bet
 	return secretData, nil
 }
 
+// Capabilities return the provider supported capabilities (ReadOnly, WriteOnly, ReadWrite).
+func (vms *VaultManagementService) Capabilities() esv1beta1.SecretStoreCapabilities {
+	return esv1beta1.SecretStoreReadOnly
+}
+
 // NewClient constructs a new secrets client based on the provided store.
 func (vms *VaultManagementService) NewClient(ctx context.Context, store esv1beta1.GenericStore, kube kclient.Client, namespace string) (esv1beta1.SecretsClient, error) {
 	storeSpec := store.GetSpec()
@@ -154,9 +180,17 @@ func (vms *VaultManagementService) NewClient(ctx context.Context, store esv1beta
 
 	secretManagementService.SetRegion(oracleSpec.Region)
 
+	kmsVaultClient, err := keymanagement.NewKmsVaultClientWithConfigurationProvider(configurationProvider)
+	if err != nil {
+		return nil, fmt.Errorf(errOracleClient, err)
+	}
+
+	kmsVaultClient.SetRegion(oracleSpec.Region)
+
 	return &VaultManagementService{
-		Client: secretManagementService,
-		vault:  oracleSpec.Vault,
+		Client:         secretManagementService,
+		KmsVaultClient: kmsVaultClient,
+		vault:          oracleSpec.Vault,
 	}, nil
 }
 
@@ -219,11 +253,99 @@ func (vms *VaultManagementService) Close(ctx context.Context) error {
 	return nil
 }
 
-func (vms *VaultManagementService) Validate() error {
-	return nil
+func (vms *VaultManagementService) Validate() (esv1beta1.ValidationResult, error) {
+	_, err := vms.KmsVaultClient.GetVault(
+		context.Background(), keymanagement.GetVaultRequest{
+			VaultId: &vms.vault,
+		},
+	)
+	if err != nil {
+		failure, ok := common.IsServiceError(err)
+		if ok {
+			code := failure.GetCode()
+			switch code {
+			case "NotAuthenticated":
+				return esv1beta1.ValidationResultError, err
+			case "NotAuthorizedOrNotFound":
+				// User authentication was successful, but user might not have a permission like:
+				//
+				// Allow group external_secrets to read vaults in tenancy
+				//
+				// Which is fine, because to read secrets we only need:
+				//
+				// Allow group external_secrets to read secret-family in tenancy
+				//
+				// But we can't test for this permission without knowing the name of a secret
+				return esv1beta1.ValidationResultUnknown, err
+			default:
+				return esv1beta1.ValidationResultError, err
+			}
+		} else {
+			return esv1beta1.ValidationResultError, err
+		}
+	}
+
+	return esv1beta1.ValidationResultReady, nil
 }
 
 func (vms *VaultManagementService) ValidateStore(store esv1beta1.GenericStore) error {
+	storeSpec := store.GetSpec()
+	oracleSpec := storeSpec.Provider.Oracle
+
+	vault := oracleSpec.Vault
+	if vault == "" {
+		return fmt.Errorf("vault cannot be empty")
+	}
+
+	region := oracleSpec.Region
+	if region == "" {
+		return fmt.Errorf("region cannot be empty")
+	}
+
+	auth := oracleSpec.Auth
+	if auth == nil {
+		return nil
+	}
+
+	user := oracleSpec.Auth.User
+	if user == "" {
+		return fmt.Errorf("user cannot be empty")
+	}
+
+	tenant := oracleSpec.Auth.Tenancy
+	if tenant == "" {
+		return fmt.Errorf("tenant cannot be empty")
+	}
+	privateKey := oracleSpec.Auth.SecretRef.PrivateKey
+
+	if privateKey.Name == "" {
+		return fmt.Errorf("privateKey.name cannot be empty")
+	}
+
+	if privateKey.Key == "" {
+		return fmt.Errorf("privateKey.key cannot be empty")
+	}
+
+	err := utils.ValidateSecretSelector(store, privateKey)
+	if err != nil {
+		return err
+	}
+
+	fingerprint := oracleSpec.Auth.SecretRef.Fingerprint
+
+	if fingerprint.Name == "" {
+		return fmt.Errorf("fingerprint.name cannot be empty")
+	}
+
+	if fingerprint.Key == "" {
+		return fmt.Errorf("fingerprint.key cannot be empty")
+	}
+
+	err = utils.ValidateSecretSelector(store, fingerprint)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

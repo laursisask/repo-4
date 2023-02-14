@@ -3,7 +3,9 @@ Copyright 2020 The cert-manager Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +23,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/external-secrets/external-secrets/e2e/framework/log"
+	"github.com/external-secrets/external-secrets-e2e/framework/log"
 )
 
 // HelmChart installs the specified Chart into the cluster.
@@ -33,6 +35,7 @@ type HelmChart struct {
 	Repo         ChartRepo
 	Vars         []StringTuple
 	Values       []string
+	Args         []string
 
 	config *Config
 }
@@ -80,6 +83,8 @@ func (c *HelmChart) Install() error {
 	for _, s := range c.Vars {
 		args = append(args, "--set", fmt.Sprintf("%s=%s", s.Key, s.Value))
 	}
+
+	args = append(args, c.Args...)
 
 	var sout, serr bytes.Buffer
 	log.Logf("installing chart with args: %+q", args)
@@ -150,6 +155,7 @@ func (c *HelmChart) Logs() error {
 		return err
 	}
 	log.Logf("logs: found %d pods", len(podList.Items))
+	tailLines := int64(200)
 	for i := range podList.Items {
 		pod := podList.Items[i]
 		for _, con := range pod.Spec.Containers {
@@ -157,6 +163,7 @@ func (c *HelmChart) Logs() error {
 				resp := kc.CoreV1().Pods(pod.Namespace).GetLogs(pod.Name, &corev1.PodLogOptions{
 					Container: con.Name,
 					Previous:  b,
+					TailLines: &tailLines,
 				}).Do(context.TODO())
 
 				err := resp.Error()
@@ -173,4 +180,13 @@ func (c *HelmChart) Logs() error {
 		}
 	}
 	return nil
+}
+
+func (c *HelmChart) HasVar(key, value string) bool {
+	for _, v := range c.Vars {
+		if v.Key == key && v.Value == value {
+			return true
+		}
+	}
+	return false
 }

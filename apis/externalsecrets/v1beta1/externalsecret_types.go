@@ -98,7 +98,6 @@ type ExternalSecretTemplate struct {
 
 	// +optional
 	Data map[string]string `json:"data,omitempty"`
-
 	// +optional
 	TemplateFrom []TemplateFrom `json:"templateFrom,omitempty"`
 }
@@ -110,12 +109,31 @@ const (
 	TemplateEngineV2 TemplateEngineVersion = "v2"
 )
 
-// +kubebuilder:validation:MinProperties=1
-// +kubebuilder:validation:MaxProperties=1
 type TemplateFrom struct {
 	ConfigMap *TemplateRef `json:"configMap,omitempty"`
 	Secret    *TemplateRef `json:"secret,omitempty"`
+	// +optional
+	// +optional
+	// +kubebuilder:default="Data"
+	Target TemplateTarget `json:"target,omitempty"`
+	// +optional
+	Literal *string `json:"literal,omitempty"`
 }
+
+type TemplateScope string
+
+const (
+	TemplateScopeValues        TemplateScope = "Values"
+	TemplateScopeKeysAndValues TemplateScope = "KeysAndValues"
+)
+
+type TemplateTarget string
+
+const (
+	TemplateTargetData        TemplateTarget = "Data"
+	TemplateTargetAnnotations TemplateTarget = "Annotations"
+	TemplateTargetLabels      TemplateTarget = "Labels"
+)
 
 type TemplateRef struct {
 	Name  string            `json:"name"`
@@ -124,6 +142,8 @@ type TemplateRef struct {
 
 type TemplateRefItem struct {
 	Key string `json:"key"`
+	// +kubebuilder:default="Values"
+	TemplateAs TemplateScope `json:"templateAs,omitempty"`
 }
 
 // ExternalSecretTarget defines the Kubernetes Secret to be created
@@ -156,9 +176,17 @@ type ExternalSecretTarget struct {
 
 // ExternalSecretData defines the connection between the Kubernetes Secret key (spec.data.<key>) and the Provider data.
 type ExternalSecretData struct {
+	// SecretKey defines the key in which the controller stores
+	// the value. This is the key in the Kind=Secret
 	SecretKey string `json:"secretKey"`
 
+	// RemoteRef points to the remote secret and defines
+	// which secret (version/property/..) to fetch.
 	RemoteRef ExternalSecretDataRemoteRef `json:"remoteRef"`
+
+	// SourceRef allows you to override the source
+	// from which the value will pulled from.
+	SourceRef *SourceRef `json:"sourceRef,omitempty"`
 }
 
 // ExternalSecretDataRemoteRef defines Provider data location.
@@ -166,19 +194,35 @@ type ExternalSecretDataRemoteRef struct {
 	// Key is the key used in the Provider, mandatory
 	Key string `json:"key"`
 
-	// Used to select a specific version of the Provider value, if supported
 	// +optional
-	Version string `json:"version,omitempty"`
+	// Policy for fetching tags/labels from provider secrets, possible options are Fetch, None. Defaults to None
+	MetadataPolicy ExternalSecretMetadataPolicy `json:"metadataPolicy,omitempty"`
 
 	// +optional
 	// Used to select a specific property of the Provider value (if a map), if supported
 	Property string `json:"property,omitempty"`
 
 	// +optional
+	// Used to select a specific version of the Provider value, if supported
+	Version string `json:"version,omitempty"`
+
+	// +optional
 	// Used to define a conversion Strategy
 	// +kubebuilder:default="Default"
 	ConversionStrategy ExternalSecretConversionStrategy `json:"conversionStrategy,omitempty"`
+
+	// +optional
+	// Used to define a decoding Strategy
+	// +kubebuilder:default="None"
+	DecodingStrategy ExternalSecretDecodingStrategy `json:"decodingStrategy,omitempty"`
 }
+
+type ExternalSecretMetadataPolicy string
+
+const (
+	ExternalSecretMetadataPolicyNone  ExternalSecretMetadataPolicy = "None"
+	ExternalSecretMetadataPolicyFetch ExternalSecretMetadataPolicy = "Fetch"
+)
 
 type ExternalSecretConversionStrategy string
 
@@ -187,17 +231,52 @@ const (
 	ExternalSecretConversionUnicode ExternalSecretConversionStrategy = "Unicode"
 )
 
-// +kubebuilder:validation:MinProperties=1
-// +kubebuilder:validation:MaxProperties=1
+type ExternalSecretDecodingStrategy string
+
+const (
+	ExternalSecretDecodeAuto      ExternalSecretDecodingStrategy = "Auto"
+	ExternalSecretDecodeBase64    ExternalSecretDecodingStrategy = "Base64"
+	ExternalSecretDecodeBase64URL ExternalSecretDecodingStrategy = "Base64URL"
+	ExternalSecretDecodeNone      ExternalSecretDecodingStrategy = "None"
+)
+
 type ExternalSecretDataFromRemoteRef struct {
 	// Used to extract multiple key/value pairs from one secret
+	// Note: Extract does not support sourceRef.Generator or sourceRef.GeneratorRef.
 	// +optional
 	Extract *ExternalSecretDataRemoteRef `json:"extract,omitempty"`
 	// Used to find secrets based on tags or regular expressions
+	// Note: Find does not support sourceRef.Generator or sourceRef.GeneratorRef.
 	// +optional
 	Find *ExternalSecretFind `json:"find,omitempty"`
+
+	// Used to rewrite secret Keys after getting them from the secret Provider
+	// Multiple Rewrite operations can be provided. They are applied in a layered order (first to last)
+	// +optional
+	Rewrite []ExternalSecretRewrite `json:"rewrite,omitempty"`
+
+	// SourceRef points to a store or generator
+	// which contains secret values ready to use.
+	// Use this in combination with Extract or Find pull values out of
+	// a specific SecretStore.
+	// When sourceRef points to a generator Extract or Find is not supported.
+	// The generator returns a static map of values
+	SourceRef *SourceRef `json:"sourceRef,omitempty"`
 }
 
+type ExternalSecretRewrite struct {
+	// Used to rewrite with regular expressions.
+	// The resulting key will be the output of a regexp.ReplaceAll operation.
+	// +optional
+	Regexp *ExternalSecretRewriteRegexp `json:"regexp,omitempty"`
+}
+
+type ExternalSecretRewriteRegexp struct {
+	// Used to define the regular expression of a re.Compiler.
+	Source string `json:"source"`
+	// Used to define the target pattern of a ReplaceAll operation.
+	Target string `json:"target"`
+}
 type ExternalSecretFind struct {
 	// A root path to start the find operations.
 	// +optional
@@ -209,10 +288,16 @@ type ExternalSecretFind struct {
 	// Find secrets based on tags.
 	// +optional
 	Tags map[string]string `json:"tags,omitempty"`
+
 	// +optional
 	// Used to define a conversion Strategy
 	// +kubebuilder:default="Default"
 	ConversionStrategy ExternalSecretConversionStrategy `json:"conversionStrategy,omitempty"`
+
+	// +optional
+	// Used to define a decoding Strategy
+	// +kubebuilder:default="None"
+	DecodingStrategy ExternalSecretDecodingStrategy `json:"decodingStrategy,omitempty"`
 }
 
 type FindName struct {
@@ -223,9 +308,11 @@ type FindName struct {
 
 // ExternalSecretSpec defines the desired state of ExternalSecret.
 type ExternalSecretSpec struct {
+	// +optional
 	SecretStoreRef SecretStoreRef `json:"secretStoreRef"`
-
-	Target ExternalSecretTarget `json:"target"`
+	// +kubebuilder:default={creationPolicy:Owner,deletionPolicy:Retain}
+	// +optional
+	Target ExternalSecretTarget `json:"target,omitempty"`
 
 	// RefreshInterval is the amount of time before the values are read again from the SecretStore provider
 	// Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
@@ -241,6 +328,30 @@ type ExternalSecretSpec struct {
 	// If multiple entries are specified, the Secret keys are merged in the specified order
 	// +optional
 	DataFrom []ExternalSecretDataFromRemoteRef `json:"dataFrom,omitempty"`
+}
+
+// SourceRef allows you to override the source
+// from which the secret will be pulled from.
+// You can define at maximum one property.
+// +kubebuilder:validation:MaxProperties=1
+type SourceRef struct {
+	// +optional
+	SecretStoreRef *SecretStoreRef `json:"storeRef,omitempty"`
+
+	// GeneratorRef points to a generator custom resource in
+	// +optional
+	GeneratorRef *GeneratorRef `json:"generatorRef,omitempty"`
+}
+
+// GeneratorRef points to a generator custom resource.
+type GeneratorRef struct {
+	// Specify the apiVersion of the generator resource
+	// +kubebuilder:default="generators.external-secrets.io/v1alpha1"
+	APIVersion string `json:"apiVersion,omitempty"`
+	// Specify the Kind of the resource, e.g. Password, ACRAccessToken etc.
+	Kind string `json:"kind"`
+	// Specify the name of the generator resource
+	Name string `json:"name"`
 }
 
 type ExternalSecretConditionType string
@@ -273,8 +384,10 @@ const (
 	ConditionReasonSecretDeleted = "SecretDeleted"
 
 	ReasonInvalidStoreRef      = "InvalidStoreRef"
+	ReasonUnavailableStore     = "UnavailableStore"
 	ReasonProviderClientConfig = "InvalidProviderClientConfig"
 	ReasonUpdateFailed         = "UpdateFailed"
+	ReasonDeprecated           = "ParameterDeprecated"
 	ReasonUpdated              = "Updated"
 	ReasonDeleted              = "Deleted"
 )
@@ -300,6 +413,7 @@ type ExternalSecretStatus struct {
 // +kubebuilder:printcolumn:name="Store",type=string,JSONPath=`.spec.secretStoreRef.name`
 // +kubebuilder:printcolumn:name="Refresh Interval",type=string,JSONPath=`.spec.refreshInterval`
 // +kubebuilder:printcolumn:name="Status",type=string,JSONPath=`.status.conditions[?(@.type=="Ready")].reason`
+// +kubebuilder:printcolumn:name="Ready",type=string,JSONPath=`.status.conditions[?(@.type=="Ready")].status`
 type ExternalSecret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

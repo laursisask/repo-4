@@ -16,13 +16,13 @@ package clusterexternalsecret
 
 import (
 	"context"
+	"sort"
 	"time"
 
 	"github.com/go-logr/logr"
 	v1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -43,16 +43,16 @@ type Reconciler struct {
 }
 
 const (
-	errGetCES              = "could not get ClusterExternalSecret"
-	errPatchStatus         = "unable to patch status"
-	errLabelMap            = "unable to get map from labels"
-	errNamespaces          = "could not get namespaces from selector"
-	errGetExistingES       = "could not get existing ExternalSecret"
-	errCreatingOrUpdating  = "could not create or update ExternalSecret"
-	errSetCtrlReference    = "could not set the controller owner reference"
-	errSecretAlreadyExists = "external secret already exists in namespace"
-	errNamespacesFailed    = "one or more namespaces failed"
-	errFailedToDelete      = "external secret in non matching namespace could not be deleted"
+	errGetCES               = "could not get ClusterExternalSecret"
+	errPatchStatus          = "unable to patch status"
+	errConvertLabelSelector = "unable to convert labelselector"
+	errNamespaces           = "could not get namespaces from selector"
+	errGetExistingES        = "could not get existing ExternalSecret"
+	errCreatingOrUpdating   = "could not create or update ExternalSecret"
+	errSetCtrlReference     = "could not set the controller owner reference"
+	errSecretAlreadyExists  = "external secret already exists in namespace"
+	errNamespacesFailed     = "one or more namespaces failed"
+	errFailedToDelete       = "external secret in non matching namespace could not be deleted"
 )
 
 func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
@@ -76,15 +76,14 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 		refreshInt = clusterExternalSecret.Spec.RefreshInterval.Duration
 	}
 
-	labelMap, err := metav1.LabelSelectorAsMap(&clusterExternalSecret.Spec.NamespaceSelector)
+	labelSelector, err := metav1.LabelSelectorAsSelector(&clusterExternalSecret.Spec.NamespaceSelector)
 	if err != nil {
-		log.Error(err, errLabelMap)
+		log.Error(err, errConvertLabelSelector)
 		return ctrl.Result{RequeueAfter: refreshInt}, err
 	}
 
 	namespaceList := v1.NamespaceList{}
-
-	err = r.List(ctx, &namespaceList, &client.ListOptions{LabelSelector: labels.SelectorFromSet(labelMap)})
+	err = r.List(ctx, &namespaceList, &client.ListOptions{LabelSelector: labelSelector})
 	if err != nil {
 		log.Error(err, errNamespaces)
 		return ctrl.Result{RequeueAfter: refreshInt}, err
@@ -132,6 +131,7 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 	setFailedNamespaces(&clusterExternalSecret, failedNamespaces)
 
 	if len(provisionedNamespaces) > 0 {
+		sort.Strings(provisionedNamespaces)
 		clusterExternalSecret.Status.ProvisionedNamespaces = provisionedNamespaces
 	}
 
@@ -170,7 +170,6 @@ func (r *Reconciler) resolveExternalSecret(ctx context.Context, clusterExternalS
 }
 
 func (r *Reconciler) removeExternalSecret(ctx context.Context, esName, namespace string) (string, error) {
-	//
 	var existingES esv1beta1.ExternalSecret
 	err := r.Get(ctx, types.NamespacedName{
 		Name:      esName,
@@ -205,7 +204,11 @@ func (r *Reconciler) removeOldNamespaces(ctx context.Context, namespaceList v1.N
 	failedNamespaces := map[string]string{}
 	// Loop through existing namespaces first to make sure they still have our labels
 	for _, namespace := range getRemovedNamespaces(namespaceList, provisionedNamespaces) {
-		if result, _ := r.removeExternalSecret(ctx, esName, namespace); result != "" {
+		result, err := r.removeExternalSecret(ctx, esName, namespace)
+		if err != nil {
+			r.Log.Error(err, "unable to delete external-secret")
+		}
+		if result != "" {
 			failedNamespaces[namespace] = result
 		}
 	}

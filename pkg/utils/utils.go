@@ -15,12 +15,17 @@ limitations under the License.
 package utils
 
 import (
-
-	// nolint:gosec
+	//nolint:gosec
 	"crypto/md5"
+	"encoding/base64"
+	"errors"
 	"fmt"
+	"net"
+	"net/url"
 	"reflect"
+	"regexp"
 	"strings"
+	"time"
 	"unicode"
 
 	esv1beta1 "github.com/external-secrets/external-secrets/apis/externalsecrets/v1beta1"
@@ -33,6 +38,96 @@ func MergeByteMap(dst, src map[string][]byte) map[string][]byte {
 		dst[k] = v
 	}
 	return dst
+}
+
+func RewriteMap(operations []esv1beta1.ExternalSecretRewrite, in map[string][]byte) (map[string][]byte, error) {
+	out := in
+	var err error
+	for i, op := range operations {
+		if op.Regexp != nil {
+			out, err = RewriteRegexp(*op.Regexp, out)
+			if err != nil {
+				return nil, fmt.Errorf("failed rewriting operation[%v]: %w", i, err)
+			}
+		}
+	}
+	return out, nil
+}
+
+// RewriteRegexp rewrites a single Regexp Rewrite Operation.
+func RewriteRegexp(operation esv1beta1.ExternalSecretRewriteRegexp, in map[string][]byte) (map[string][]byte, error) {
+	out := make(map[string][]byte)
+	re, err := regexp.Compile(operation.Source)
+	if err != nil {
+		return nil, err
+	}
+	for key, value := range in {
+		newKey := re.ReplaceAllString(key, operation.Target)
+		out[newKey] = value
+	}
+	return out, nil
+}
+
+// DecodeValues decodes values from a secretMap.
+func DecodeMap(strategy esv1beta1.ExternalSecretDecodingStrategy, in map[string][]byte) (map[string][]byte, error) {
+	out := make(map[string][]byte, len(in))
+	for k, v := range in {
+		val, err := Decode(strategy, v)
+		if err != nil {
+			return nil, fmt.Errorf("failure decoding key %v: %w", k, err)
+		}
+		out[k] = val
+	}
+	return out, nil
+}
+
+func Decode(strategy esv1beta1.ExternalSecretDecodingStrategy, in []byte) ([]byte, error) {
+	switch strategy {
+	case esv1beta1.ExternalSecretDecodeBase64:
+		out, err := base64.StdEncoding.DecodeString(string(in))
+		if err != nil {
+			return nil, err
+		}
+		return out, nil
+	case esv1beta1.ExternalSecretDecodeBase64URL:
+		out, err := base64.URLEncoding.DecodeString(string(in))
+		if err != nil {
+			return nil, err
+		}
+		return out, nil
+	case esv1beta1.ExternalSecretDecodeNone:
+		return in, nil
+	// default when stored version is v1alpha1
+	case "":
+		return in, nil
+	case esv1beta1.ExternalSecretDecodeAuto:
+		out, err := Decode(esv1beta1.ExternalSecretDecodeBase64, in)
+		if err != nil {
+			out, err := Decode(esv1beta1.ExternalSecretDecodeBase64URL, in)
+			if err != nil {
+				return Decode(esv1beta1.ExternalSecretDecodeNone, in)
+			}
+			return out, nil
+		}
+		return out, nil
+	default:
+		return nil, fmt.Errorf("decoding strategy %v is not supported", strategy)
+	}
+}
+
+func ValidateKeys(in map[string][]byte) bool {
+	for key := range in {
+		for _, v := range key {
+			if !unicode.IsNumber(v) &&
+				!unicode.IsLetter(v) &&
+				v != '-' &&
+				v != '.' &&
+				v != '_' {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 // ConvertKeys converts a secret map into a valid key.
@@ -63,6 +158,8 @@ func convert(strategy esv1beta1.ExternalSecretConversionStrategy, str string) st
 				newName[rk] = "_"
 			case esv1beta1.ExternalSecretConversionUnicode:
 				newName[rk] = fmt.Sprintf("_U%04x_", rv)
+			default:
+				newName[rk] = string(rv)
 			}
 		} else {
 			newName[rk] = string(rv)
@@ -91,7 +188,8 @@ func IsNil(i interface{}) bool {
 }
 
 // ObjectHash calculates md5 sum of the data contained in the secret.
-// nolint:gosec
+//
+//nolint:gosec
 func ObjectHash(object interface{}) string {
 	textualVersion := fmt.Sprintf("%+v", object)
 	return fmt.Sprintf("%x", md5.Sum([]byte(textualVersion)))
@@ -107,16 +205,33 @@ func ErrorContains(out error, want string) bool {
 	return strings.Contains(out.Error(), want)
 }
 
+var (
+	errNamespaceNotAllowed = errors.New("namespace not allowed with namespaced SecretStore")
+	errRequireNamespace    = errors.New("cluster scope requires namespace")
+)
+
 // ValidateSecretSelector just checks if the namespace field is present/absent
 // depending on the secret store type.
 // We MUST NOT check the name or key property here. It MAY be defaulted by the provider.
 func ValidateSecretSelector(store esv1beta1.GenericStore, ref esmeta.SecretKeySelector) error {
 	clusterScope := store.GetObjectKind().GroupVersionKind().Kind == esv1beta1.ClusterSecretStoreKind
 	if clusterScope && ref.Namespace == nil {
-		return fmt.Errorf("cluster scope requires namespace")
+		return errRequireNamespace
 	}
 	if !clusterScope && ref.Namespace != nil {
-		return fmt.Errorf("namespace not allowed with namespaced SecretStore")
+		return errNamespaceNotAllowed
+	}
+	return nil
+}
+
+// ValidateReferentSecretSelector allows
+// cluster scoped store without namespace
+// this should replace above ValidateServiceAccountSelector once all providers
+// support referent auth.
+func ValidateReferentSecretSelector(store esv1beta1.GenericStore, ref esmeta.SecretKeySelector) error {
+	clusterScope := store.GetObjectKind().GroupVersionKind().Kind == esv1beta1.ClusterSecretStoreKind
+	if !clusterScope && ref.Namespace != nil {
+		return errNamespaceNotAllowed
 	}
 	return nil
 }
@@ -127,10 +242,45 @@ func ValidateSecretSelector(store esv1beta1.GenericStore, ref esmeta.SecretKeySe
 func ValidateServiceAccountSelector(store esv1beta1.GenericStore, ref esmeta.ServiceAccountSelector) error {
 	clusterScope := store.GetObjectKind().GroupVersionKind().Kind == esv1beta1.ClusterSecretStoreKind
 	if clusterScope && ref.Namespace == nil {
-		return fmt.Errorf("cluster scope requires namespace")
+		return errRequireNamespace
 	}
 	if !clusterScope && ref.Namespace != nil {
-		return fmt.Errorf("namespace not allowed with namespaced SecretStore")
+		return errNamespaceNotAllowed
 	}
+	return nil
+}
+
+// ValidateReferentServiceAccountSelector allows
+// cluster scoped store without namespace
+// this should replace above ValidateServiceAccountSelector once all providers
+// support referent auth.
+func ValidateReferentServiceAccountSelector(store esv1beta1.GenericStore, ref esmeta.ServiceAccountSelector) error {
+	clusterScope := store.GetObjectKind().GroupVersionKind().Kind == esv1beta1.ClusterSecretStoreKind
+	if !clusterScope && ref.Namespace != nil {
+		return errNamespaceNotAllowed
+	}
+	return nil
+}
+
+func NetworkValidate(endpoint string, timeout time.Duration) error {
+	hostname, err := url.Parse(endpoint)
+
+	if err != nil {
+		return fmt.Errorf("could not parse url: %w", err)
+	}
+
+	host := hostname.Hostname()
+	port := hostname.Port()
+
+	if port == "" {
+		port = "443"
+	}
+
+	url := fmt.Sprintf("%v:%v", host, port)
+	conn, err := net.DialTimeout("tcp", url, timeout)
+	if err != nil {
+		return fmt.Errorf("error accessing external store: %w", err)
+	}
+	defer conn.Close()
 	return nil
 }

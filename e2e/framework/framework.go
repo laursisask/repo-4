@@ -3,7 +3,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,22 +22,13 @@ import (
 	. "github.com/onsi/gomega"
 	api "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
-	kscheme "k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	crclient "sigs.k8s.io/controller-runtime/pkg/client"
 
-	esv1alpha1 "github.com/external-secrets/external-secrets/apis/externalsecrets/v1alpha1"
-	esv1beta1 "github.com/external-secrets/external-secrets/apis/externalsecrets/v1beta1"
-	"github.com/external-secrets/external-secrets/e2e/framework/addon"
-	"github.com/external-secrets/external-secrets/e2e/framework/log"
-	"github.com/external-secrets/external-secrets/e2e/framework/util"
+	"github.com/external-secrets/external-secrets-e2e/framework/addon"
+	"github.com/external-secrets/external-secrets-e2e/framework/log"
+	"github.com/external-secrets/external-secrets-e2e/framework/util"
 )
-
-func init() {
-	_ = kscheme.AddToScheme(util.Scheme)
-	_ = esv1beta1.AddToScheme(util.Scheme)
-	_ = esv1alpha1.AddToScheme(util.Scheme)
-}
 
 type Framework struct {
 	BaseName string
@@ -80,6 +71,7 @@ func (f *Framework) BeforeEach() {
 
 // AfterEach deletes the namespace and cleans up the registered addons.
 func (f *Framework) AfterEach() {
+	addon.PrintLogs()
 	for _, a := range f.Addons {
 		if CurrentSpecReport().Failed() {
 			err := a.Logs()

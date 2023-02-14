@@ -12,6 +12,7 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "external-secrets.selectorLabels" . | nindent 6 }}
@@ -32,6 +33,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "external-secrets.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -89,6 +91,18 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.extraVolumeMounts }}
+          volumeMounts:
+          {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+      {{- if .Values.dnsConfig }}
+      dnsConfig:
+          {{- toYaml .Values.dnsConfig | nindent 8 }}
+      {{- end }}
+      {{- if .Values.extraVolumes }}
+      volumes:
+      {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

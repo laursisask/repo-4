@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	kmssdk "github.com/aliyun/alibaba-cloud-sdk-go/services/kms"
 	"github.com/tidwall/gjson"
@@ -51,8 +52,13 @@ type Client struct {
 	accessKey []byte
 }
 
+// https://github.com/external-secrets/external-secrets/issues/644
+var _ esv1beta1.SecretsClient = &KeyManagementService{}
+var _ esv1beta1.Provider = &KeyManagementService{}
+
 type KeyManagementService struct {
 	Client SMInterface
+	url    string
 }
 
 type SMInterface interface {
@@ -106,6 +112,14 @@ func (c *Client) setAuth(ctx context.Context) error {
 	}
 	c.regionID = c.store.RegionID
 	return nil
+}
+
+func (kms *KeyManagementService) PushSecret(ctx context.Context, value []byte, remoteRef esv1beta1.PushRemoteRef) error {
+	return fmt.Errorf("not implemented")
+}
+
+func (kms *KeyManagementService) DeleteSecret(ctx context.Context, remoteRef esv1beta1.PushRemoteRef) error {
+	return fmt.Errorf("not implemented")
 }
 
 // Empty GetAllSecrets.
@@ -162,6 +176,11 @@ func (kms *KeyManagementService) GetSecretMap(ctx context.Context, ref esv1beta1
 	return secretData, nil
 }
 
+// Capabilities return the provider supported capabilities (ReadOnly, WriteOnly, ReadWrite).
+func (kms *KeyManagementService) Capabilities() esv1beta1.SecretStoreCapabilities {
+	return esv1beta1.SecretStoreReadOnly
+}
+
 // NewClient constructs a new secrets client based on the provided store.
 func (kms *KeyManagementService) NewClient(ctx context.Context, store esv1beta1.GenericStore, kube kclient.Client, namespace string) (esv1beta1.SecretsClient, error) {
 	storeSpec := store.GetSpec()
@@ -183,6 +202,7 @@ func (kms *KeyManagementService) NewClient(ctx context.Context, store esv1beta1.
 		return nil, fmt.Errorf(errAlibabaClient, err)
 	}
 	kms.Client = keyManagementService
+	kms.url = alibabaSpec.Endpoint
 	return kms, nil
 }
 
@@ -190,11 +210,54 @@ func (kms *KeyManagementService) Close(ctx context.Context) error {
 	return nil
 }
 
-func (kms *KeyManagementService) Validate() error {
-	return nil
+func (kms *KeyManagementService) Validate() (esv1beta1.ValidationResult, error) {
+	timeout := 15 * time.Second
+	url := kms.url
+
+	if err := utils.NetworkValidate(url, timeout); err != nil {
+		return esv1beta1.ValidationResultError, err
+	}
+	return esv1beta1.ValidationResultReady, nil
 }
 
 func (kms *KeyManagementService) ValidateStore(store esv1beta1.GenericStore) error {
+	storeSpec := store.GetSpec()
+	alibabaSpec := storeSpec.Provider.Alibaba
+
+	regionID := alibabaSpec.RegionID
+
+	if regionID == "" {
+		return fmt.Errorf("missing alibaba region")
+	}
+
+	accessKeyID := alibabaSpec.Auth.SecretRef.AccessKeyID
+	err := utils.ValidateSecretSelector(store, accessKeyID)
+	if err != nil {
+		return err
+	}
+
+	if accessKeyID.Name == "" {
+		return fmt.Errorf("missing alibaba access ID name")
+	}
+
+	if accessKeyID.Key == "" {
+		return fmt.Errorf("missing alibaba access ID key")
+	}
+
+	accessKeySecret := alibabaSpec.Auth.SecretRef.AccessKeySecret
+	err = utils.ValidateSecretSelector(store, accessKeySecret)
+	if err != nil {
+		return err
+	}
+
+	if accessKeySecret.Name == "" {
+		return fmt.Errorf("missing alibaba access key secret name")
+	}
+
+	if accessKeySecret.Key == "" {
+		return fmt.Errorf("missing alibaba access key secret key")
+	}
+
 	return nil
 }
 

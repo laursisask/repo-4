@@ -3,7 +3,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,4 +44,18 @@ func GetAWSProvider(store esv1beta1.GenericStore) (*esv1beta1.AWSProvider, error
 		return nil, fmt.Errorf(errInvalidProvider, store.GetObjectMeta().String())
 	}
 	return prov, nil
+}
+
+func IsReferentSpec(prov esv1beta1.AWSAuth) bool {
+	if prov.JWTAuth != nil && prov.JWTAuth.ServiceAccountRef != nil && prov.JWTAuth.ServiceAccountRef.Namespace == nil {
+		return true
+	}
+	if prov.SecretRef != nil &&
+		(prov.SecretRef.AccessKeyID.Namespace == nil ||
+			prov.SecretRef.SecretAccessKey.Namespace == nil ||
+			(prov.SecretRef.SessionToken != nil && prov.SecretRef.SessionToken.Namespace == nil)) {
+		return true
+	}
+
+	return false
 }

@@ -20,6 +20,25 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+const (
+	// Ready indicates that the client is confgured correctly
+	// and can be used.
+	ValidationResultReady ValidationResult = iota
+
+	// Unknown indicates that the client can be used
+	// but information is missing and it can not be validated.
+	ValidationResultUnknown
+
+	// Error indicates that there is a misconfiguration.
+	ValidationResultError
+)
+
+type ValidationResult uint8
+
+func (v ValidationResult) String() string {
+	return [...]string{"Ready", "Unknown", "Error"}[v]
+}
+
 // +kubebuilder:object:root=false
 // +kubebuilder:object:generate:false
 // +k8s:deepcopy-gen:interfaces=nil
@@ -32,6 +51,8 @@ type Provider interface {
 
 	// ValidateStore checks if the provided store is valid
 	ValidateStore(store GenericStore) error
+	// Capabilities returns the provider Capabilities (Read, Write, ReadWrite)
+	Capabilities() SecretStoreCapabilities
 }
 
 // +kubebuilder:object:root=false
@@ -46,9 +67,16 @@ type SecretsClient interface {
 	// then the secret entry will be deleted depending on the deletionPolicy.
 	GetSecret(ctx context.Context, ref ExternalSecretDataRemoteRef) ([]byte, error)
 
+	// PushSecret will write a single secret into the provider
+	PushSecret(ctx context.Context, value []byte, remoteRef PushRemoteRef) error
+
+	// DeleteSecret will delete the secret from a provider
+	DeleteSecret(ctx context.Context, remoteRef PushRemoteRef) error
+
 	// Validate checks if the client is configured correctly
-	// and is able to retrieve secrets from the provider
-	Validate() error
+	// and is able to retrieve secrets from the provider.
+	// If the validation result is unknown it will be ignored.
+	Validate() (ValidationResult, error)
 
 	// GetSecretMap returns multiple k/v pairs from the provider
 	GetSecretMap(ctx context.Context, ref ExternalSecretDataRemoteRef) (map[string][]byte, error)
