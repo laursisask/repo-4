@@ -18,13 +18,11 @@ it is recommended to always use the name `lz4` with appropriate arguments
 DESCRIPTION
 -----------
 
-`lz4` is an extremely fast lossless compression algorithm,
-based on **byte-aligned LZ77** family of compression scheme.
-`lz4` offers compression speeds > 500 MB/s per core,
-linearly scalable with multi-core CPUs.
-It features an extremely fast decoder, offering speed in multiple GB/s per core,
-typically reaching RAM speed limit on multi-core systems.
-The native file format is the `.lz4` format.
+`lz4` is a CLI based on `liblz4`, an extremely fast implementation of lossless compression algorithm.
+It provides a default compression speed of typically > 500 MB/s per core.
+Speed can traded for higher compression ratio, by increasing the compression level parameter.
+While decompression is single-threaded, it reaches multiple GB/s, generally fast enough to be I/O bound.
+`lz4` native file format is the `.lz4` format.
 
 ### Difference between lz4 and gzip
 
@@ -59,7 +57,7 @@ Default behaviors can be modified by opt-in commands, detailed below.
   * Similarly, `lz4 -m -d` can decompress multiple `*.lz4` files.
   * It's possible to opt-in to erase source files
     on successful compression or decompression, using `--rm` command.
-  * Consequently, `lz4 -m --rm` behaves the same as `gzip`.
+  * Consequently, `lz4 -m --rm` features a behavior closer to the `gzip` one.
 
 ### Concatenation of .lz4 files
 
@@ -137,6 +135,10 @@ only the latest one will be applied.
 
 * `--best`:
   Set highest compression level. Same as -12.
+
+* `-T#`, `--threads=#`:
+  Use `#` threads for compression.
+  When `0`, or none provided: automatically determined from nb of detected cores.
 
 * `--favor-decSpeed`:
   Generate compressed data optimized for decompression speed.
