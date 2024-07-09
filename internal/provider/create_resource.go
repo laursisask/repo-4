@@ -188,7 +188,10 @@ func (r *createResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	certClient.DeleteCertificateOperation(ctx, state.Name.ValueString(), nil)
+	// We don't actually care if this works or not
+	certResp, err := certClient.DeleteCertificateOperation(ctx, state.Name.ValueString(), nil)
+	_ = certResp
+	_ = err
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, state)
