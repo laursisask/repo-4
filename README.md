@@ -30,13 +30,13 @@ resource "azurekvca_create" "test" {
     key_type   = "RSA"
     reuse_key  = true
   }
+
+  trigger = "Change me to trigger a recreate"
 }
 
 # Optionally mangle the CSR to add values not supported by Azure (URI SAN for example)
 resource "azurekvca_request" "test" {
-  vault_url = azurekvca_create.test.vault_url
-  key_name  = azurekvca_create.test.name
-
+  vault_url  = azurekvca_create.test.vault_url
   csr_pem_in = azurekvca_create.test.csr_pem
 
   names = {

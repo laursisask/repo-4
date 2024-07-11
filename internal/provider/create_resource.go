@@ -41,6 +41,7 @@ type createResourceModel struct {
 	CSRPEM   types.String `tfsdk:"csr_pem"`
 	Key      createKey    `tfsdk:"key"`
 	Name     types.String `tfsdk:"name"`
+	Trigger  types.String `tfsdk:"trigger"`
 	VaultURL types.String `tfsdk:"vault_url"`
 }
 
@@ -90,6 +91,13 @@ func (r *createResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 			"name": schema.StringAttribute{
 				MarkdownDescription: "Name of cert to create",
 				Required:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"trigger": schema.StringAttribute{
+				MarkdownDescription: "String value that when changed triggers a recreate. Good for triggering rotations",
+				Optional:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

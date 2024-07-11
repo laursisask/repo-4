@@ -126,13 +126,17 @@ func (r *requestResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	template, err := x509.ParseCertificateRequest(csrBlock.Bytes)
+	parsedCSR, err := x509.ParseCertificateRequest(csrBlock.Bytes)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error decoding CSR",
 			"Could not decode CSR, unexpected error: "+err.Error(),
 		)
 		return
+	}
+
+	template := &x509.CertificateRequest{
+		Subject: parsedCSR.Subject,
 	}
 
 	if plan.Names.Email != nil {
@@ -175,7 +179,7 @@ func (r *requestResource) Create(ctx context.Context, req resource.CreateRequest
 		}
 	}
 
-	signer, err := NewAzureKVSigner(ctx, *r.azureCred, plan.VaultURL.ValueString(), "", "", template.PublicKey)
+	signer, err := NewAzureKVSigner(ctx, *r.azureCred, plan.VaultURL.ValueString(), "", "", parsedCSR.PublicKey)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating signer",

@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -100,7 +99,6 @@ func (r *mergeResource) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	certBase64 := base64.StdEncoding.EncodeToString(certBlock.Bytes)
-	tflog.Info(ctx, certBase64)
 	var certs = [][]byte{[]byte(certBase64)}
 
 	certParams := azcertificates.MergeCertificateParameters{

@@ -21,6 +21,10 @@ Create a new certificate version and if needed cert ready for signing
 - `name` (String) Name of cert to create
 - `vault_url` (String) URL of Azure Key Vault
 
+### Optional
+
+- `trigger` (String) String value that when changed triggers a recreate. Good for triggering rotations
+
 ### Read-Only
 
 - `csr_pem` (String) Resulting CSR in PEM format
