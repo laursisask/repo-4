@@ -40,8 +40,8 @@ type signResourceModel struct {
 	CSRPEM             types.String `tfsdk:"csr_pem"`
 	SignatureAlgorithm types.String `tfsdk:"signature_algorithm"`
 	SignedCertPEM      types.String `tfsdk:"signed_cert_pem"`
-	VaultURL           types.String `tfsdk:"vault_url"`
 	ValidityDays       types.Int64  `tfsdk:"validity_days"`
+	VaultURL           types.String `tfsdk:"vault_url"`
 }
 
 // Metadata returns the resource type name.
@@ -52,38 +52,49 @@ func (r *signResource) Metadata(_ context.Context, req resource.MetadataRequest,
 // Schema defines the schema for the resource.
 func (r *signResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Sign a CSR using a CA certificate in Key Vault. This can be done with CAs with non exportable keys",
 		Attributes: map[string]schema.Attribute{
 			"ca_name": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Name of cert to use as the CA",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"csr_pem": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Input CSR in PEM format",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"signature_algorithm": schema.StringAttribute{
+				MarkdownDescription: "Algorithm to use when signing the cert" +
+					"If the CA cert has a RSA key use one of" +
+					"RS256, RS384, RS512" +
+					"If the CA cert has an EC key use one of" +
+					"ES256, ES384, ES512",
 				Required: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"signed_cert_pem": schema.StringAttribute{
-				Computed: true,
-			},
-			"vault_url": schema.StringAttribute{
-				Required: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
+				MarkdownDescription: "Resulting signed cert in PEM format",
+				Computed:            true,
 			},
 			"validity_days": schema.Int64Attribute{
-				Required: true,
+				MarkdownDescription: "Number of days to make cert valid for",
+				Required:            true,
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.RequiresReplace(),
+				},
+			},
+			"vault_url": schema.StringAttribute{
+				MarkdownDescription: "URL of Azure Key Vault",
+				Required:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
 				},
 			},
 		},

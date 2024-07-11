@@ -44,21 +44,25 @@ func (r *mergeResource) Metadata(_ context.Context, req resource.MetadataRequest
 // Schema defines the schema for the resource.
 func (r *mergeResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Complete a certificate operation by merging the signed certificate with pending version",
 		Attributes: map[string]schema.Attribute{
 			"cert_pem": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Cert to merge in PEM format",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Name of pending cert",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"vault_url": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "URL of Azure Key Vault",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

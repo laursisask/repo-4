@@ -52,27 +52,35 @@ func (r *createResource) Metadata(_ context.Context, req resource.MetadataReques
 // Schema defines the schema for the resource.
 func (r *createResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Create a new certificate version and if needed cert ready for signing",
 		Attributes: map[string]schema.Attribute{
 			"csr_pem": schema.StringAttribute{
-				Computed: true,
+				MarkdownDescription: "Resulting CSR in PEM format",
+				Computed:            true,
 			},
 			"key": schema.SingleNestedAttribute{
-				Required: true,
+				MarkdownDescription: "Private key attributes",
+				Required:            true,
 				Attributes: map[string]schema.Attribute{
 					"curve": schema.StringAttribute{
-						Optional: true,
+						MarkdownDescription: "One of (P-256, P-384, P-521) Required if key type is EC or EC-HSM",
+						Optional:            true,
 					},
 					"exportable": schema.BoolAttribute{
-						Required: true,
+						MarkdownDescription: "Is key able to be exported. Not supported if -HSM key type is used",
+						Required:            true,
 					},
 					"key_size": schema.Int64Attribute{
-						Optional: true,
+						MarkdownDescription: "Size of key in bits. Required if key type is RSA or RSA-HSM",
+						Optional:            true,
 					},
 					"key_type": schema.StringAttribute{
-						Required: true,
+						MarkdownDescription: "Type of key to create (RSA, RSA-HSM, EC, EC-HSM)",
+						Required:            true,
 					},
 					"reuse_key": schema.BoolAttribute{
-						Required: true,
+						MarkdownDescription: "Should private key be reused on subsequent versions",
+						Required:            true,
 					},
 				},
 				PlanModifiers: []planmodifier.Object{
@@ -80,13 +88,15 @@ func (r *createResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 				},
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Name of cert to create",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"vault_url": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "URL of Azure Key Vault",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

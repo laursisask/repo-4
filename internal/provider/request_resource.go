@@ -33,8 +33,8 @@ type requestResource struct {
 }
 
 type requestNames struct {
-	Email []types.String `tfsdk:"email"`
 	DNS   []types.String `tfsdk:"dns"`
+	Email []types.String `tfsdk:"email"`
 	IP    []types.String `tfsdk:"ip"`
 	URI   []types.String `tfsdk:"uri"`
 }
@@ -54,34 +54,42 @@ func (r *requestResource) Metadata(_ context.Context, req resource.MetadataReque
 // Schema defines the schema for the resource.
 func (r *requestResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Mangle a CSR to add fields that aren't supported by Azure (URI SANs)",
 		Attributes: map[string]schema.Attribute{
 			"csr_pem_in": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Input CSR in PEM format",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"csr_pem_out": schema.StringAttribute{
-				Computed: true,
+				MarkdownDescription: "Resulting CSR ready for signing (Will be missing a signature)",
+				Computed:            true,
 			},
 			"names": schema.SingleNestedAttribute{
-				Required: true,
+				MarkdownDescription: "SAN values to set",
+				Required:            true,
 				Attributes: map[string]schema.Attribute{
-					"email": schema.ListAttribute{
-						ElementType: types.StringType,
-						Optional:    true,
-					},
 					"dns": schema.ListAttribute{
-						ElementType: types.StringType,
-						Optional:    true,
+						MarkdownDescription: "List of DNS names to add to SAN",
+						ElementType:         types.StringType,
+						Optional:            true,
+					},
+					"email": schema.ListAttribute{
+						MarkdownDescription: "List of email address to add to SAN",
+						ElementType:         types.StringType,
+						Optional:            true,
 					},
 					"ip": schema.ListAttribute{
-						ElementType: types.StringType,
-						Optional:    true,
+						MarkdownDescription: "List of IPs to add to SAN",
+						ElementType:         types.StringType,
+						Optional:            true,
 					},
 					"uri": schema.ListAttribute{
-						ElementType: types.StringType,
-						Optional:    true,
+						MarkdownDescription: "List of URIs to add to SAN",
+						ElementType:         types.StringType,
+						Optional:            true,
 					},
 				},
 				PlanModifiers: []planmodifier.Object{
@@ -89,7 +97,8 @@ func (r *requestResource) Schema(_ context.Context, _ resource.SchemaRequest, re
 				},
 			},
 			"vault_url": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "URL of Azure Key Vault",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
