@@ -43,7 +43,6 @@ type requestResourceModel struct {
 	CSRPEMIn  types.String `tfsdk:"csr_pem_in"`
 	CSRPEMOut types.String `tfsdk:"csr_pem_out"`
 	Names     requestNames `tfsdk:"names"`
-	VaultURL  types.String `tfsdk:"vault_url"`
 }
 
 // Metadata returns the resource type name.
@@ -94,13 +93,6 @@ func (r *requestResource) Schema(_ context.Context, _ resource.SchemaRequest, re
 				},
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplace(),
-				},
-			},
-			"vault_url": schema.StringAttribute{
-				MarkdownDescription: "URL of Azure Key Vault",
-				Required:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
 				},
 			},
 		},
@@ -179,7 +171,7 @@ func (r *requestResource) Create(ctx context.Context, req resource.CreateRequest
 		}
 	}
 
-	signer, err := NewAzureKVSigner(ctx, *r.azureCred, plan.VaultURL.ValueString(), "", "", parsedCSR.PublicKey)
+	signer, err := NewAzureKVSigner(ctx, *r.azureCred, "", "", "", parsedCSR.PublicKey)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating signer",

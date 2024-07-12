@@ -19,7 +19,6 @@ Mangle a CSR to add fields that aren't supported by Azure (URI SANs)
 
 - `csr_pem_in` (String) Input CSR in PEM format
 - `names` (Attributes) SAN values to set (see [below for nested schema](#nestedatt--names))
-- `vault_url` (String) URL of Azure Key Vault
 
 ### Read-Only
 

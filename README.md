@@ -36,7 +36,6 @@ resource "azurekvca_create" "test" {
 
 # Optionally mangle the CSR to add values not supported by Azure (URI SAN for example)
 resource "azurekvca_request" "test" {
-  vault_url  = azurekvca_create.test.vault_url
   csr_pem_in = azurekvca_create.test.csr_pem
 
   names = {
