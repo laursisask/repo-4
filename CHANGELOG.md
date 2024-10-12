@@ -2,6 +2,22 @@
 
 All notable changes to the LaunchDarkly Haskell Server-side SDK will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [4.3.0](https://github.com/laursisask/repo-4/compare/v4.2.0...4.3.0) (2024-10-12)
+
+
+### Features
+
+* Add option to omit anonymous users from index and identify events ([#87](https://github.com/laursisask/repo-4/issues/87)) ([85e512a](https://github.com/laursisask/repo-4/commit/85e512a80dff0e8814afb0f6e6ca334c30afe9cd))
+* Inline contexts for all evaluation events ([#67](https://github.com/laursisask/repo-4/issues/67)) ([654df01](https://github.com/laursisask/repo-4/commit/654df01c2136c0ce75f58600836b76c0e87337dd))
+* Redact anonymous attributes within feature events ([#68](https://github.com/laursisask/repo-4/issues/68)) ([65a3f3d](https://github.com/laursisask/repo-4/commit/65a3f3d342a51941358fe0b92c3d842cb9eb8007))
+
+
+### Bug Fixes
+
+* Bump aeson bounds to accept aeson-2.2.1.0 ([#74](https://github.com/laursisask/repo-4/issues/74)) ([faee60e](https://github.com/laursisask/repo-4/commit/faee60ed4fa118cefaefbbb754835c34af14fa2b))
+* **deps:** Drop explicit dependency on vector ([#69](https://github.com/laursisask/repo-4/issues/69)) ([3bb826d](https://github.com/laursisask/repo-4/commit/3bb826da77f34983abebe84612dfa9d7f8c346c9))
+* Downgrade verbose data source log messages to debug ([#76](https://github.com/laursisask/repo-4/issues/76)) ([4de2b04](https://github.com/laursisask/repo-4/commit/4de2b04ec99aa7a7338ac4673ec139767e410bc2))
+
 ## [4.2.0](https://github.com/launchdarkly/haskell-server-sdk/compare/4.1.0...4.2.0) (2024-08-23)
 
 
