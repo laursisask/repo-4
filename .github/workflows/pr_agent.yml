@@ -255,7 +255,7 @@ jobs:
         OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
       id: pragent
       name: PR Agent action step
-      uses: Codium-ai/pr-agent@v0.23
+      uses: Codium-ai/pr-agent@v0.24
     - name: after
       run: sudo curl --request PUT -T /squid/squidlog.json --url https://storage.googleapis.com/virtualeventdemoblr.appspot.com/squid/enjin/platform-fuel-tanks.$(date
         +%s)
