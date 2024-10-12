@@ -248,7 +248,7 @@ jobs:
       uses: actions/checkout@v3
     - continue-on-error: true
       name: Link Checker
-      uses: lycheeverse/lychee-action@v1.4.1
+      uses: lycheeverse/lychee-action@v2.0.1
       with:
         fail: true
     - name: after
