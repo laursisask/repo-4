@@ -7,7 +7,7 @@ require (
 	github.com/alessio/shellescape v1.4.1
 	github.com/cheggaaa/pb/v3 v3.1.0
 	github.com/containerd/containerd v1.6.8
-	github.com/containerd/continuity v0.3.0
+	github.com/containerd/continuity v0.4.3
 	github.com/coreos/go-semver v0.3.0
 	github.com/cyphar/filepath-securejoin v0.2.3
 	github.com/digitalocean/go-qemu v0.0.0-20210326154740-ac9e0b687001
@@ -30,7 +30,7 @@ require (
 	github.com/spf13/cobra v1.5.0
 	github.com/xorcare/pointer v1.2.1
 	github.com/yalue/native_endian v1.0.2
-	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
+	golang.org/x/sys v0.1.0
 	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools/v3 v3.3.0
 )
