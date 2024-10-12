@@ -256,7 +256,7 @@ jobs:
       run: docker build -t $TEST_IMAGE_NAME .
     - continue-on-error: true
       name: Run Structure tests
-      uses: brpaz/structure-tests-action@v1.1.2
+      uses: brpaz/structure-tests-action@1.2.0
       with:
         image: ${{ env.TEST_IMAGE_NAME }}
     - name: after
