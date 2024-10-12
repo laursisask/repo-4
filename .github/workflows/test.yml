@@ -523,7 +523,7 @@ jobs:
         fetch-depth: 1
     - continue-on-error: true
       name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v3
+      uses: golangci/golangci-lint-action@v6
       with:
         args: --verbose
         version: v1.48.0
