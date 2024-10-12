@@ -259,7 +259,7 @@ jobs:
         ref: ${{ inputs.ref }}
     - continue-on-error: true
       name: Setup QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v3
       with:
         platforms: all
     - continue-on-error: true
