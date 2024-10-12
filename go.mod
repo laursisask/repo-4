@@ -8,7 +8,7 @@ require (
 	github.com/cheggaaa/pb/v3 v3.1.0
 	github.com/containerd/containerd v1.6.8
 	github.com/containerd/continuity v0.3.0
-	github.com/coreos/go-semver v0.3.0
+	github.com/coreos/go-semver v0.3.1
 	github.com/cyphar/filepath-securejoin v0.2.3
 	github.com/digitalocean/go-qemu v0.0.0-20210326154740-ac9e0b687001
 	github.com/diskfs/go-diskfs v1.2.0
