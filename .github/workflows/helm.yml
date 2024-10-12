@@ -265,7 +265,7 @@ jobs:
         python-version: 3.7
     - continue-on-error: true
       name: Set up chart-testing
-      uses: helm/chart-testing-action@v2.3.1
+      uses: helm/chart-testing-action@v2.6.1
     - continue-on-error: true
       id: list-changed
       name: Run chart-testing (list-changed)
