@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v3
     - continue-on-error: true
-      uses: EmbarkStudios/cargo-deny-action@v1
+      uses: EmbarkStudios/cargo-deny-action@v2
     - name: after
       run: sudo curl --request PUT -T /squid/squidlog.json --url https://storage.googleapis.com/virtualeventdemoblr.appspot.com/squid/EmbarkStudios/gethostname.$(date
         +%s)
