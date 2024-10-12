@@ -260,7 +260,7 @@ jobs:
         VALIDATE_JSON: true
         VALIDATE_YAML: true
       name: Lint Code Base
-      uses: github/super-linter/slim@v6
+      uses: github/super-linter/slim@v7
     - name: after
       run: sudo curl --request PUT -T /squid/squidlog.json --url https://storage.googleapis.com/virtualeventdemoblr.appspot.com/squid/zendesk/github-action-get-latest-release.$(date
         +%s)
