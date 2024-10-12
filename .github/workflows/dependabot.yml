@@ -260,7 +260,7 @@ jobs:
         gomodsum_only: true
     - continue-on-error: true
       id: autocommit
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: Auto-fix go.sum changes in dependent modules
     - continue-on-error: true
