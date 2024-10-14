@@ -267,7 +267,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -554,7 +554,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ matrix.python-version }}
@@ -880,7 +880,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       name: Download all coverage artifacts
       uses: actions/download-artifact@v4.1.8
@@ -1147,7 +1147,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       name: Download all coverage artifacts
       uses: actions/download-artifact@v4.1.8
@@ -1413,7 +1413,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -1693,7 +1693,7 @@ jobs:
         sudo apt-get -y install \\\n  libturbojpeg\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -1982,7 +1982,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: generate_python_cache_key
       name: Generate partial Python venv restore key
@@ -2312,7 +2312,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       name: Register hadolint problem matcher
       run: 'echo "::add-matcher::.github/workflows/matchers/hadolint.json"
@@ -2582,7 +2582,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -2928,7 +2928,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -3215,7 +3215,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -3502,7 +3502,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -3817,7 +3817,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -4121,7 +4121,7 @@ jobs:
         \ libgammu-dev\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -4404,7 +4404,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -4700,7 +4700,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
@@ -5007,7 +5007,7 @@ jobs:
         \ libgammu-dev\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ matrix.python-version }}
@@ -5363,7 +5363,7 @@ jobs:
         \ libmariadb-dev-compat\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ matrix.python-version }}
@@ -5713,7 +5713,7 @@ jobs:
         \ libgammu-dev\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ matrix.python-version }}
@@ -6065,7 +6065,7 @@ jobs:
         \ postgresql-server-dev-14\n"
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       id: python
       name: Set up Python ${{ matrix.python-version }}

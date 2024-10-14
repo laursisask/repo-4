@@ -248,7 +248,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Checkout the repository
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       name: Set up Python ${{ env.DEFAULT_PYTHON }}
       uses: actions/setup-python@v5.2.0

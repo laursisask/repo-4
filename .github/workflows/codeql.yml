@@ -254,7 +254,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Check out code from GitHub
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.1
     - continue-on-error: true
       name: Initialize CodeQL
       uses: github/codeql-action/init@v3.26.7
