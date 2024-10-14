@@ -14,7 +14,7 @@
 
 # builder image
 ARG ARCH
-FROM golang:1.20 as builder
+FROM golang:1.23 as builder
 ARG ARCH
 
 WORKDIR /sigs.k8s.io/external-dns
@@ -26,7 +26,7 @@ RUN go mod download
 COPY . .
 RUN make build
 
-FROM alpine:3.18
+FROM alpine:3.20
 
 RUN apk update && apk add "libcrypto3>=3.0.8-r4" "libssl3>=3.0.8-r4" && rm -rf /var/cache/apt/*
 
