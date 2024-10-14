@@ -251,17 +251,17 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - continue-on-error: true
       name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v3
     - continue-on-error: true
       name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
     - continue-on-error: true
       if: github.event_name != 'pull_request'
       name: Log into registry ${{ env.REGISTRY }}
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ${{ env.REGISTRY }}
@@ -269,7 +269,7 @@ jobs:
     - continue-on-error: true
       id: meta
       name: Extract Docker metadata
-      uses: docker/metadata-action@v3
+      uses: docker/metadata-action@v5
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: 'type=ref,event=branch
@@ -283,7 +283,7 @@ jobs:
           '
     - continue-on-error: true
       name: Build and push Docker image
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v6
       with:
         context: .
         labels: ${{ steps.meta.outputs.labels }}

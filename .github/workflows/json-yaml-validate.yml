@@ -245,10 +245,10 @@ jobs:
 
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - continue-on-error: true
       name: json-yaml-validate
-      uses: GrantBirki/json-yaml-validate@v1.5.0
+      uses: GrantBirki/json-yaml-validate@v3.2.1
       with:
         comment: 'true'
         yaml_exclude_regex: (charts/external-dns/templates.*|mkdocs.yml)

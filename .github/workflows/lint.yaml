@@ -251,12 +251,12 @@ jobs:
     - continue-on-error: true
       id: go
       name: Set up Go 1.x
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
         go-version: '1.20'
     - continue-on-error: true
       name: Check out code into the Go module directory
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - continue-on-error: true
       name: Lint
       run: 'curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh

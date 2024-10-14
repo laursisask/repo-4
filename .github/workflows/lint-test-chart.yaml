@@ -249,7 +249,7 @@ jobs:
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
       name: Checkout
-      uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+      uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
       with:
         fetch-depth: 0
     - continue-on-error: true
@@ -267,18 +267,18 @@ jobs:
         '
     - continue-on-error: true
       name: Set-up Helm
-      uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78
+      uses: azure/setup-helm@fe7b79cd5ee1e45176fcad797de68ecaf3ca4814
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         version: latest
     - continue-on-error: true
       name: Set-up Python
-      uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5
+      uses: actions/setup-python@19dfb7b659fa9e60c2f89c33335ab5f6f1792b6e
       with:
         python-version: 3.x
     - continue-on-error: true
       name: Set-up chart-testing
-      uses: helm/chart-testing-action@e8788873172cb653a90ca2e819d79d65a66d4e76
+      uses: helm/chart-testing-action@e6669bcd63d7cb57cb4380c33043eebe5d111992
     - continue-on-error: true
       id: list-changed
       name: Run chart-testing (list-changed)
@@ -290,7 +290,7 @@ jobs:
     - continue-on-error: true
       if: steps.list-changed.outputs.changed == 'true'
       name: Set-up Kind cluster
-      uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140
+      uses: helm/kind-action@0025e74a8c7512023d06dc019c617aa3cf561fde
       with:
         wait: 120s
     - continue-on-error: true
