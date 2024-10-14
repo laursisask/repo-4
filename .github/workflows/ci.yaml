@@ -278,7 +278,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ env.DEFAULT_PYTHON }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -572,7 +572,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.1
       with:
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
           }}
@@ -581,7 +581,7 @@ jobs:
     - continue-on-error: true
       if: steps.cache-venv.outputs.cache-hit != 'true'
       name: Restore uv wheel cache
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.1
       with:
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ steps.generate-uv-key.outputs.key
           }}
@@ -1424,7 +1424,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -1704,7 +1704,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ env.DEFAULT_PYTHON }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -2593,7 +2593,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-venv-${{\n\
@@ -2602,7 +2602,7 @@ jobs:
     - continue-on-error: true
       id: cache-precommit
       name: Restore pre-commit environment from cache
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{\n  needs.info.outputs.pre-commit_cache_key\
@@ -2939,7 +2939,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-venv-${{\n\
@@ -2948,7 +2948,7 @@ jobs:
     - continue-on-error: true
       id: cache-precommit
       name: Restore pre-commit environment from cache
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{\n  needs.info.outputs.pre-commit_cache_key\
@@ -3226,7 +3226,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-venv-${{\n\
@@ -3235,7 +3235,7 @@ jobs:
     - continue-on-error: true
       id: cache-precommit
       name: Restore pre-commit environment from cache
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{\n  needs.info.outputs.pre-commit_cache_key\
@@ -3520,7 +3520,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ env.DEFAULT_PYTHON }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -3528,7 +3528,7 @@ jobs:
         path: venv
     - continue-on-error: true
       name: Restore mypy cache
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.1
       with:
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ steps.generate-mypy-key.outputs.key
           }}
@@ -3828,7 +3828,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.1
       with:
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-venv-${{\n\
           \  needs.info.outputs.pre-commit_cache_key }}"
@@ -3850,7 +3850,7 @@ jobs:
     - continue-on-error: true
       id: cache-precommit
       name: Restore pre-commit environment from cache
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.1.1
       with:
         key: "${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{\n  needs.info.outputs.pre-commit_cache_key\
           \ }}"
@@ -4132,7 +4132,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore base Python virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -4415,7 +4415,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ env.DEFAULT_PYTHON }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -4711,7 +4711,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ env.DEFAULT_PYTHON }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -5018,7 +5018,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ matrix.python-version }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -5374,7 +5374,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ matrix.python-version }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -5724,7 +5724,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ matrix.python-version }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
@@ -6076,7 +6076,7 @@ jobs:
     - continue-on-error: true
       id: cache-venv
       name: Restore full Python ${{ matrix.python-version }} virtual environment
-      uses: actions/cache/restore@v4.0.2
+      uses: actions/cache/restore@v4.1.1
       with:
         fail-on-cache-miss: true
         key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ needs.info.outputs.python_cache_key
