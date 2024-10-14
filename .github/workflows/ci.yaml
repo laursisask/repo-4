@@ -293,7 +293,7 @@ jobs:
         '
     - continue-on-error: true
       name: Upload licenses
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: licenses
         path: licenses.json
@@ -4147,7 +4147,7 @@ jobs:
         '
     - continue-on-error: true
       name: Upload pytest_buckets
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: pytest_buckets
         overwrite: true
@@ -5064,7 +5064,7 @@ jobs:
     - continue-on-error: true
       if: success() || failure() && steps.pytest-full.conclusion == 'failure'
       name: Upload pytest output
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: pytest-${{ github.run_number }}-${{ matrix.python-version }}-${{ matrix.group
           }}
@@ -5073,7 +5073,7 @@ jobs:
     - continue-on-error: true
       if: needs.info.outputs.skip_coverage != 'true'
       name: Upload coverage artifact
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: coverage-${{ matrix.python-version }}-${{ matrix.group }}
         overwrite: true
@@ -5425,7 +5425,7 @@ jobs:
     - continue-on-error: true
       if: success() || failure() && steps.pytest-partial.conclusion == 'failure'
       name: Upload pytest output
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: pytest-${{ github.run_number }}-${{ matrix.python-version }}-${{ steps.pytest-partial.outputs.mariadb
           }}
@@ -5434,7 +5434,7 @@ jobs:
     - continue-on-error: true
       if: needs.info.outputs.skip_coverage != 'true'
       name: Upload coverage artifact
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: coverage-${{ matrix.python-version }}-${{ steps.pytest-partial.outputs.mariadb
           }}
@@ -5768,7 +5768,7 @@ jobs:
     - continue-on-error: true
       if: success() || failure() && steps.pytest-partial.conclusion == 'failure'
       name: Upload pytest output
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: pytest-${{ github.run_number }}-${{ matrix.python-version }}-${{ matrix.group
           }}
@@ -5777,7 +5777,7 @@ jobs:
     - continue-on-error: true
       if: needs.info.outputs.skip_coverage != 'true'
       name: Upload coverage artifact
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: coverage-${{ matrix.python-version }}-${{ matrix.group }}
         overwrite: true
@@ -6127,7 +6127,7 @@ jobs:
     - continue-on-error: true
       if: success() || failure() && steps.pytest-partial.conclusion == 'failure'
       name: Upload pytest output
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: pytest-${{ github.run_number }}-${{ matrix.python-version }}-${{ steps.pytest-partial.outputs.postgresql
           }}
@@ -6136,7 +6136,7 @@ jobs:
     - continue-on-error: true
       if: needs.info.outputs.skip_coverage != 'true'
       name: Upload coverage artifact
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: coverage-${{ matrix.python-version }}-${{ steps.pytest-partial.outputs.postgresql
           }}

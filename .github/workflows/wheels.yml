@@ -585,7 +585,7 @@ jobs:
         \n) > .env_file\n"
     - continue-on-error: true
       name: Upload env_file
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         include-hidden-files: true
         name: env_file
@@ -593,7 +593,7 @@ jobs:
         path: ./.env_file
     - continue-on-error: true
       name: Upload requirements_diff
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: requirements_diff
         overwrite: true
@@ -607,7 +607,7 @@ jobs:
         '
     - continue-on-error: true
       name: Upload requirements_all_wheels
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: requirements_all_wheels
         path: ./requirements_all_wheels_*.txt
