@@ -522,7 +522,7 @@ requests==2.31.0
     #   requests-mock
     #   responses
     #   sphinx
-requests-mock==1.11.0
+requests-mock==1.12.1
     # via -r requirements-tests.txt
 responses==0.23.3
     # via
@@ -557,7 +557,6 @@ six==1.16.0
     #   jsonschema
     #   junit-xml
     #   python-dateutil
-    #   requests-mock
     #   retrying
     #   sphinxcontrib-httpdomain
 smmap==5.0.1

@@ -265,7 +265,7 @@ requests==2.31.0
     #   moto
     #   requests-mock
     #   responses
-requests-mock==1.11.0
+requests-mock==1.12.1
     # via -r requirements-tests.in
 responses==0.23.3
     # via moto
@@ -284,7 +284,6 @@ six==1.16.0
     #   jsonschema
     #   junit-xml
     #   python-dateutil
-    #   requests-mock
 smmap==5.0.1
     # via gitdb
 sortedcontainers==2.4.0
