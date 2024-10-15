@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v2
     - continue-on-error: true
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - continue-on-error: true

@@ -254,7 +254,7 @@ jobs:
         go-version: 1.17
     - continue-on-error: true
       name: Set up Task
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - continue-on-error: true

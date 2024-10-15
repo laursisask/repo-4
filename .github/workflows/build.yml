@@ -256,7 +256,7 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - continue-on-error: true
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - continue-on-error: true
@@ -557,7 +557,7 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - continue-on-error: true
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - continue-on-error: true
