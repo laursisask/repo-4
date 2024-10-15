@@ -82,7 +82,7 @@ faker==20.0.0
     # via
     #   -r requirements-tests.in
     #   factory-boy
-fakeredis==2.20.0
+fakeredis==2.25.1
     # via -r requirements-tests.in
 flask==1.1.2
     # via
@@ -312,6 +312,7 @@ typing-extensions==4.8.0
     #   alembic
     #   aws-sam-translator
     #   black
+    #   fakeredis
     #   pydantic
     #   pydantic-core
 urllib3==1.26.18
