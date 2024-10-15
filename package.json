@@ -41,7 +41,7 @@
     "@changesets/changelog-github": "^0.4.8",
     "@nrwl/nx-cloud": "latest",
     "@types/chai": "^4.2.18",
-    "@types/chai-as-promised": "^7.1.4",
+    "@types/chai-as-promised": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.3",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
