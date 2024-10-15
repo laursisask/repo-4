@@ -245,7 +245,7 @@ jobs:
 
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
-      uses: dessant/lock-threads@v3
+      uses: dessant/lock-threads@v5
       with:
         github-token: ${{ github.token }}
         issue-lock-comment: 'This issue has been automatically locked since there
