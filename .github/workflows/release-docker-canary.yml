@@ -261,7 +261,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_ACCESS_TOKEN_USERNAME }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: ./ops/docker/Dockerfile.packages
@@ -801,7 +801,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_ACCESS_TOKEN_USERNAME }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: ./ops/docker/Dockerfile.packages
@@ -1082,7 +1082,7 @@ jobs:
         '
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         build-args: 'GITDATE=${{ steps.build_args.outputs.GITDATE }}
 
@@ -1359,7 +1359,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_ACCESS_TOKEN_USERNAME }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: ./ops/docker/Dockerfile.packages
@@ -1640,7 +1640,7 @@ jobs:
         '
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         build-args: 'GITDATE=${{ steps.build_args.outputs.GITDATE }}
 
@@ -1917,7 +1917,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_ACCESS_TOKEN_USERNAME }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: ./ops/docker/Dockerfile.packages
@@ -2188,7 +2188,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_ACCESS_TOKEN_USERNAME }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: ./ops/docker/Dockerfile.packages
