@@ -75,7 +75,7 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a
 	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.5.0
-	golang.org/x/oauth2 v0.4.0
+	golang.org/x/oauth2 v0.23.0
 	google.golang.org/api v0.109.0
 	google.golang.org/genproto v0.0.0-20230202175211-008b39050e57 // indirect
 	google.golang.org/grpc v1.52.3
@@ -103,10 +103,9 @@ require (
 	sigs.k8s.io/yaml v1.3.0
 )
 
-require cloud.google.com/go/compute/metadata v0.2.3 // indirect
+require cloud.google.com/go/compute/metadata v0.3.0 // indirect
 
 require (
-	cloud.google.com/go/compute v1.18.0 // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.1.2 // indirect
 	github.com/Azure/go-autorest v14.2.0+incompatible // indirect
 	github.com/Azure/go-autorest/autorest/azure/cli v0.4.6 // indirect
