@@ -9,7 +9,7 @@ require (
 	go.opentelemetry.io/collector/config/configtelemetry v0.86.0
 	go.opentelemetry.io/collector/confmap v0.86.0
 	go.opentelemetry.io/collector/exporter v0.86.0
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.27.0
 )
 
 require (
