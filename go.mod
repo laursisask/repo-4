@@ -100,7 +100,7 @@ require (
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.6.1
 	github.com/sethvargo/go-password v0.2.0
 	github.com/spf13/pflag v1.0.5
-	sigs.k8s.io/yaml v1.3.0
+	sigs.k8s.io/yaml v1.4.0
 )
 
 require cloud.google.com/go/compute/metadata v0.2.3 // indirect
