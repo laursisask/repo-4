@@ -7,7 +7,7 @@ buildscript {
     hibernateValidatorVersion = '6.1.7.Final'
     mockWebserverVersion = '4.9.1'
     spotbugsAnnotationsVersion = '4.3.0'
-    httpComponentsVersion = '4.5.13'
+    httpComponentsVersion = '4.5.14'
     reactorTestVersion = '3.4.8'
 
     // plugins
