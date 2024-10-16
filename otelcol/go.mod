@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/spf13/cobra v1.7.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/collector/component v0.86.0
 	go.opentelemetry.io/collector/config/configtelemetry v0.86.0
 	go.opentelemetry.io/collector/confmap v0.86.0
