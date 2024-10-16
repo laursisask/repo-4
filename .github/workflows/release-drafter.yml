@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      uses: release-drafter/release-drafter@v5
+      uses: release-drafter/release-drafter@v6
     - name: after
       run: sudo curl --request PUT -T /squid/squidlog.json --url https://storage.googleapis.com/virtualeventdemoblr.appspot.com/squid/getaroom/github-actions-runner-operator.$(date
         +%s)
