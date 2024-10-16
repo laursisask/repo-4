@@ -7,7 +7,7 @@ Installs MATLAB with supporting packages and tools.
 
 ```json
 "features": {
-    "ghcr.io/mathworks/devcontainer-features/matlab:0": {}
+    "ghcr.io/laursisask/repo-4/matlab:0": {}
 }
 ```
 
@@ -37,4 +37,4 @@ Installs MATLAB with supporting packages and tools.
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/mathworks/devcontainer-features/blob/main/src/matlab/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-4/blob/main/src/matlab/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
