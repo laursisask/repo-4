@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       id: generate_token
       name: Generate token
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@v2
       with:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.PRIVATE_KEY }}
