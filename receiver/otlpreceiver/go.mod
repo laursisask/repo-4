@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/gogo/protobuf v1.3.2
 	github.com/klauspost/compress v1.17.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/collector v0.86.0
 	go.opentelemetry.io/collector/component v0.86.0
 	go.opentelemetry.io/collector/config/configgrpc v0.86.0
