@@ -544,7 +544,7 @@ jobs:
     - continue-on-error: true
       id: noop
       name: Detect No-op Changes
-      uses: fkirc/skip-duplicate-actions@v5.3.0
+      uses: fkirc/skip-duplicate-actions@v5.3.1
       with:
         concurrent_skipping: false
         do_not_skip: '["workflow_dispatch", "schedule", "push"]'
