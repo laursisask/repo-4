@@ -24,8 +24,9 @@ GEM
     fast_blank (1.0.1)
     fastimage (2.3.0)
     ffi (1.16.3)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.3.0)
+      temple (>= 0.8.2)
+      thor
       tilt
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
@@ -128,7 +129,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  haml (>= 4.0.5, < 6.0)
+  haml (>= 4.0.5, < 7.0)
   middleman (= 4.5.1)
   middleman-autoprefixer (~> 3.0.0)
   middleman-sprockets (~> 4.1.1)
