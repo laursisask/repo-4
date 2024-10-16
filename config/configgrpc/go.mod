@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/mostynb/go-grpc-compression v1.2.1
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/collector v0.86.0
 	go.opentelemetry.io/collector/component v0.86.0
 	go.opentelemetry.io/collector/config/configauth v0.86.0
