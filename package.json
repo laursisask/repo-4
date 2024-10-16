@@ -39,6 +39,6 @@
     "@nomiclabs/hardhat-solhint": "^3.0.1",
     "bs58check": "^3.0.1",
     "hardhat": "^2.17.0",
-    "solidity-coverage": "^0.8.12"
+    "solidity-coverage": "^0.8.13"
   }
 }
