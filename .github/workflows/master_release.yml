@@ -262,16 +262,16 @@ jobs:
       with:
         persist-credentials: false
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v7.2.0
       with:
         email: ${{ env.GIT_EMAIL }}
         global: true
@@ -541,16 +541,16 @@ jobs:
       with:
         persist-credentials: false
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v7.2.0
       with:
         email: ${{ env.GIT_EMAIL }}
         global: true

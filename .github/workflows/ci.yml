@@ -268,11 +268,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -296,7 +296,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -332,7 +332,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -626,11 +626,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -643,7 +643,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} 0${{ matrix.part }} - (MySQL)
           ${{ matrix.test-name }}
@@ -929,11 +929,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -946,7 +946,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} 0${{ matrix.part }} - (PostgreSQL)
           ${{ matrix.test-name }}
@@ -1229,11 +1229,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -1501,11 +1501,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -1513,7 +1513,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} - ${{ matrix.testModule }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -1548,7 +1548,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -1831,11 +1831,11 @@ jobs:
 
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       uses: Alfresco/ya-pmd-scan@v4.0.0
       with:
@@ -2090,11 +2090,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -2358,11 +2358,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -2383,7 +2383,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} - ${{ matrix.testSuite }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -2415,7 +2415,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -2698,11 +2698,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -2731,7 +2731,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} - ${{ matrix.testSuite }} ${{
           matrix.idp }}
@@ -2768,7 +2768,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3079,11 +3079,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -3097,7 +3097,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3134,7 +3134,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3403,11 +3403,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -3421,7 +3421,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} - ${{ matrix.version }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3458,7 +3458,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3734,11 +3734,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -3750,7 +3750,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.13.1
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -3785,7 +3785,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.13.1
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4054,11 +4054,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -4072,7 +4072,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4105,7 +4105,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4374,11 +4374,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -4392,7 +4392,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4425,7 +4425,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4694,11 +4694,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -4712,7 +4712,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -4745,7 +4745,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5014,11 +5014,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -5032,7 +5032,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5065,7 +5065,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5334,11 +5334,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
@@ -5350,7 +5350,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5387,7 +5387,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5658,11 +5658,11 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Build
       run: 'bash ./scripts/ci/init.sh
@@ -5687,7 +5687,7 @@ jobs:
       id: rp-prepare
       if: github.ref_name == 'master'
       name: Prepare Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-prepare@v7.2.0
       with:
         rp-launch-prefix: ${{ env.RP_LAUNCH_PREFIX }} - ${{ matrix.test-name }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -5733,7 +5733,7 @@ jobs:
       id: rp-summarize
       if: github.ref_name == 'master'
       name: Summarize Report Portal
-      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v5.1.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/reportportal-summarize@v7.2.0
       with:
         rp-launch-key: ${{ steps.rp-prepare.outputs.key }}
         rp-project: ${{ env.RP_PROJECT }}
@@ -6030,13 +6030,13 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/github-download-file@v5.6.0
+      uses: Alfresco/alfresco-build-tools/.github/actions/github-download-file@v7.2.0
       with:
         file-path: alfresco-community-repo/alfresco-community-repo-baseline.json
         repository: Alfresco/veracode-baseline-archive
@@ -6331,16 +6331,16 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/get-build-info@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v7.2.0
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v7.2.0
     - continue-on-error: true
       name: Init
       run: bash ./scripts/ci/init.sh
     - continue-on-error: true
-      uses: Alfresco/alfresco-build-tools/.github/actions/veracode@v1.35.2
+      uses: Alfresco/alfresco-build-tools/.github/actions/veracode@v7.2.0
       with:
         srcclr-api-token: ${{ secrets.SRCCLR_API_TOKEN }}
     - continue-on-error: true
