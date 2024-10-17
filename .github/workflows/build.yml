@@ -248,7 +248,7 @@ jobs:
     - continue-on-error: true
       id: go
       name: Set up Go 1.15
-      uses: actions/setup-go@v2.1.3
+      uses: actions/setup-go@v5.0.2
       with:
         go-version: 1.15.x
     - continue-on-error: true
