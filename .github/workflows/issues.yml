@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       if: '${{ github.event.label.name == '':speech_balloon: Question'' }}'
       name: Close Issue
-      uses: peter-evans/close-issue@v1
+      uses: peter-evans/close-issue@v3
       with:
         comment: Please note this issue tracker is not a help forum. We recommend
           using [StackOverflow](https://stackoverflow.com/questions/tagged/jestjs)
