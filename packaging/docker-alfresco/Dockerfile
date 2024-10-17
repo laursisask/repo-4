@@ -1,5 +1,5 @@
 # More infos about this image: https://github.com/Alfresco/alfresco-docker-base-tomcat
-FROM alfresco/alfresco-base-tomcat:tomcat10-jre17-rockylinux9@sha256:395664f9d9be0c9f73d3b722a58fd559ee7231609b263dfe19502617652740e3
+FROM alfresco/alfresco-base-tomcat:tomcat10-jre17-rockylinux9@sha256:004c1366d27f484ef63d5a5d4e2208deba8a5f4ba63552b7db4d89696eb8bdc8
 
 # Set default docker_context.
 ARG resource_path=target
