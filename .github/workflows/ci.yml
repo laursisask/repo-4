@@ -1837,7 +1837,7 @@ jobs:
     - continue-on-error: true
       uses: Alfresco/alfresco-build-tools/.github/actions/setup-java-build@v1.35.2
     - continue-on-error: true
-      uses: Alfresco/ya-pmd-scan@v4.0.0
+      uses: Alfresco/ya-pmd-scan@v4.1.0
       with:
         classpath-build-command: mvn test-compile -ntp -Pags -pl "-:alfresco-community-repo-docker"
     - name: after
