@@ -252,7 +252,7 @@ jobs:
       run: git fetch --prune --unshallow
     - continue-on-error: true
       name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.1.4
+      uses: actions/setup-node@v4.0.4
       with:
         node-version: 12.16.x
     - continue-on-error: true
