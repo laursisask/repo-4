@@ -249,7 +249,7 @@ jobs:
     - continue-on-error: true
       id: publish
       name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@3.02
+      uses: elgohr/Publish-Docker-Github-Action@3.04
       with:
         name: sundowndev/phoneinfoga
         password: ${{ secrets.DOCKER_PASSWORD }}
