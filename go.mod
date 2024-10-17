@@ -9,7 +9,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/joho/godotenv v1.4.0
+	github.com/joho/godotenv v1.5.1
 	github.com/mediocregopher/radix/v4 v4.1.0
 	github.com/onrik/logrus v0.9.0
 	github.com/pilinux/structs v1.1.1
