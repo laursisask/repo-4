@@ -14,6 +14,6 @@ require (
 	github.com/spf13/cobra v1.1.1
 	github.com/stretchr/testify v1.7.0
 	github.com/sundowndev/dorkgen v1.2.0
-	github.com/swaggo/swag v1.7.0
+	github.com/swaggo/swag v1.16.3
 	gopkg.in/h2non/gock.v1 v1.0.16
 )
